@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "author": "mourabraz <cmourabraz@gmail.com>",
   "license": "MIT",
+  "main": "./bin/index.js",
   "scripts": {
+    "start": "node bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
@@ -17,6 +19,7 @@
     "commander": "^8.3.0",
     "dotenv": "^14.3.2",
     "glob": "^7.2.0",
+    "node-emoji": "^1.11.0",
     "sp-rest-proxy": "^3.0.0"
   }
 }

@@ -1,11 +1,10 @@
-import dotenv from 'dotenv';
 import RestProxy from 'sp-rest-proxy';
-
-dotenv.config();
+import config from '../../config.js'
+import { getConfigPath } from '../commands/configuration.js';
 
 const settingsBase = {
-  configPath: './src/config/sp-proxy.config.json',
-  port: +process.env.SP_PROXY_PORT,
+  configPath: getConfigPath(),
+  port: +config.SP_PROXY_PORT,
   staticRoot: './node_modules/sp-rest-proxy/static',
   logLevel: 0,
 };

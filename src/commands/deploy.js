@@ -1,8 +1,25 @@
 import fs from 'fs';
 import glob from 'glob';
+import config from '../../config.js'
 import { folderExists, createFolder, sendFile, createFolderIfNotExists } from '../api/index.js';
 
-const folder = `${process.env.SRC_PROJECT_FOLDER}/${process.env.SRC_BUILD_REL_FOLDER}`;
+const folder = `${config.SRC_PROJECT_FOLDER}/${config.SRC_BUILD_REL_FOLDER}`;
+
+const changeAllHtmlExtensionsToTxt = (files) => {
+    const [otherFiles, htmlFiles] = files.reduce(
+      (acc, item) => {
+       if(!item.endsWith('.html')) acc[0].push(item)
+       else acc[1].push(item);
+       return acc;
+      }, [[], []]
+    );
+
+    for(let i = 0; i < htmlFiles.length; i++) {
+      fs.renameSync(htmlFiles[i], htmlFiles[i].replace('.html', '.txt'));
+    }
+
+    return otherFiles.concat(htmlFiles);
+}
 
 const getAllFiles = () => {
   return new Promise((resolve, reject)=> {
@@ -14,7 +31,7 @@ const getAllFiles = () => {
           console.log('Error', error);
           reject(error);
         } else {
-          const temp = files
+          const temp = changeAllHtmlExtensionsToTxt(files)
             .map(i => i.replace(`${folder}/`, '').split('/'))
             .map(i => {
               if (i.length === 1) return i;
@@ -34,14 +51,11 @@ const getAllFiles = () => {
 const createFoldersByPath = async (path) => {
   const folders = path.split('/');
   let parentFolder = '';
-  const promises = [];
 
-  folders.forEach(folder => {
-    promises.push(createFolderIfNotExists(`${process.env.DEST_REL_FOLDER}/${parentFolder}${folder}`));
+  for (let folder of folders) {
+    await createFolderIfNotExists(`${config.DEST_REL_FOLDER}/${parentFolder}${folder}`);
     parentFolder = `${parentFolder}${folder}/`;
-  });
-
-  await Promise.allSettled(promises);
+  }
 }
 
 const createFoldersByArray = async (folders) => {
@@ -74,25 +88,25 @@ const sendFileToFolder = async (
 };
 
 export const deploy = async () => {
-  const checkSrcFolder = fs.existsSync(`${process.env.SRC_PROJECT_FOLDER}/${process.env.SRC_BUILD_REL_FOLDER}`);
+  const checkSrcFolder = fs.existsSync(`${config.SRC_PROJECT_FOLDER}/${config.SRC_BUILD_REL_FOLDER}`);
   
   if(!checkSrcFolder) {
     throw new Error('Build folder not found') 
   }
 
-  const destFolderExists = await folderExists(process.env.DEST_REL_FOLDER);
+  const destFolderExists = await folderExists(config.DEST_REL_FOLDER);
   if(!destFolderExists) {
-    await createFolder(process.env.DEST_REL_FOLDER);
+    await createFolder(config.DEST_REL_FOLDER);
   }
 
   const listOfFiles = await getAllFiles();
   const listOfFolders = Array.from(new Set([...listOfFiles.filter(i => i.length > 1).map(i => i[0])]));
   await createFoldersByArray(listOfFolders);
 
-  const promises = listOfFiles.map(i => sendFileToFolder(folder, process.env.DEST_REL_FOLDER, i))
+  const promises = listOfFiles.map(i => sendFileToFolder(folder, config.DEST_REL_FOLDER, i))
   const results = await Promise.allSettled(promises);
   const success = results.filter(result => result.status === 'fulfilled').map(i => i.value);
-  const rejected = results.filter(result => result.status === 'rejected').map(result => result.reason.response.data.error.message.value);
+  const rejected = results.filter(result => result.status === 'rejected').map(result => result.reason.response?.data?.error?.message?.value);
 
-  return [...success, ...rejected];
+  return { success, rejected };
 }

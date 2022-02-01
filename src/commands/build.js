@@ -1,9 +1,10 @@
 import util from 'util';
 import { exec } from 'child_process';
+import config from '../../config.js'
 
 const execAsync = util.promisify(exec);
 
-const commandBuild = `yarn --cwd ${process.env.SRC_PROJECT_FOLDER} ${process.env.COMMAND_BUILD}`;
+const commandBuild = `yarn --cwd ${config.SRC_PROJECT_FOLDER} ${config.COMMAND_BUILD}`;
 
 export const build = async () => {
   try{

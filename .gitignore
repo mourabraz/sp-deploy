@@ -14,7 +14,8 @@
 .env
 
 # config
-/src/config/sp-proxy.config.json
+/sp-deploy
+/config.js
 
 npm-debug.log*
 yarn-debug.log*

@@ -1,10 +1,11 @@
 import axios from 'axios';
+import config from '../../config.js'
 
-const baseURL = `http://localhost:${process.env.SP_PROXY_PORT}/${process.env.SP_RELATIVE_PATH}/_api/web`;
+const baseURL = `http://localhost:${config.SP_PROXY_PORT}/${config.SP_RELATIVE_PATH}/_api/web`;
 
 export const createFolderIfNotExists = async (folderName) => {
-  const getEndpoint = `${baseURL}/getfolderbyserverrelativeurl('SiteAssets/${folderName}')`;
-  const postEndpoint = `${baseURL}/folders/add('SiteAssets/${folderName}')`;
+  const getEndpoint = `${baseURL}/getfolderbyserverrelativeurl('${config.DOCUMENT_LIBRARY}/${folderName}')`;
+  const postEndpoint = `${baseURL}/folders/add('${config.DOCUMENT_LIBRARY}/${folderName}')`;
 
   return axios.get(getEndpoint).catch(error => {
     if (error.response.status === 404) {
@@ -21,7 +22,7 @@ export const createFolderIfNotExists = async (folderName) => {
 
 export const createFolder = async (folderName) => {
   const endpoint = 
-    `${baseURL}/folders/add('SiteAssets/${folderName}')`;
+    `${baseURL}/folders/add('${config.DOCUMENT_LIBRARY}/${folderName}')`;
 
     const response = await axios.post(endpoint, null, {
       headers: {
@@ -36,7 +37,7 @@ export const createFolder = async (folderName) => {
 
 export const folderExists = async (folderName) => {
   const endpoint = 
-    `${baseURL}/getfolderbyserverrelativeurl('SiteAssets/${folderName}')`;
+    `${baseURL}/getfolderbyserverrelativeurl('${config.DOCUMENT_LIBRARY}/${folderName}')`;
 
     try {
       await axios.get(endpoint, {
@@ -59,7 +60,7 @@ export const folderExists = async (folderName) => {
 
 export const getFolders = async (folderName) => {
   const endpoint = 
-    `${baseURL}/getfolderbyserverrelativeurl('SiteAssets/${folderName}')?$expand=Folders`;
+    `${baseURL}/getfolderbyserverrelativeurl('${config.DOCUMENT_LIBRARY}/${folderName}')?$expand=Folders`;
 
     const response = await axios.get(endpoint, {
       headers: {
@@ -74,7 +75,7 @@ export const getFolders = async (folderName) => {
 
 export const renameFolder = async (folderName, newName) => {
   const endpoint = 
-    `${baseURL}/getfolderbyserverrelativeurl('SiteAssets/${folderName}')/ListItemAllFields`;
+    `${baseURL}/getfolderbyserverrelativeurl('${config.DOCUMENT_LIBRARY}/${folderName}')/ListItemAllFields`;
 
   const response = await axios.get(endpoint, {
     headers: {
@@ -113,7 +114,7 @@ export const renameFolder = async (folderName, newName) => {
 };
 
 export const removeFolder = async (folderName) => {
-  const endpoint = `${baseURL}/getfolderbyserverrelativeurl('SiteAssets/${folderName}')`;
+  const endpoint = `${baseURL}/getfolderbyserverrelativeurl('${config.DOCUMENT_LIBRARY}/${folderName}')`;
 
   const response = await axios.post(endpoint, null, {
     headers: {
@@ -134,7 +135,7 @@ export const sendFile = async (
   folderName,
 ) => {
   const endpoint = 
-    `${baseURL}/getfolderbyserverrelativeurl('SiteAssets/${folderName}')/Files/Add(url='${fileName}', overwrite=true)`;
+    `${baseURL}/getfolderbyserverrelativeurl('${config.DOCUMENT_LIBRARY}/${folderName}')/Files/Add(url='${fileName}', overwrite=true)`;
 
   const response = await axios.post(endpoint, file, {
     headers: {

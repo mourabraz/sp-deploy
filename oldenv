@@ -1,0 +1,18 @@
+SP_PROXY_PORT=8989
+SP_RELATIVE_PATH=roc-dev
+
+# SRC_PROJECT_FOLDER='/home/mourabraz/Projects/Telekom/Telekom_PVG_ROC_new'
+SRC_PROJECT_FOLDER='/home/mourabraz/Projects/test/Telekom_PVG_ROC_test'
+# SRC_PROJECT_FOLDER='/home/mourabraz/Projects/green_pass_coder/express_api'
+SRC_BUILD_REL_FOLDER=build
+
+DOCUMENT_LIBRARY='SiteAssets'
+DEST_REL_FOLDER='webapp/build'
+BACKUP_REL_FOLDER='webapp/backup'
+
+# the npm command to build the target aplication
+COMMAND_BUILD='build'
+
+# maximum backup folder to keep
+MAXIMUM_BACKUPS=3
+
