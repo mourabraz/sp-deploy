@@ -1,5 +1,5 @@
 {
-  "name": "trdtsp_js",
+  "name": "sp-deploy",
   "version": "1.0.0",
   "author": "mourabraz <cmourabraz@gmail.com>",
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "type": "module",
   "bin": {
-    "deploy": "./bin/index.js"
+    "sp-deploy": "./bin/index.js"
   },
   "dependencies": {
     "axios": "^0.25.0",
