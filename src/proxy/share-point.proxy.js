@@ -1,10 +1,9 @@
 import RestProxy from 'sp-rest-proxy';
-import config from '../../config.js'
-import { getConfigPath } from '../commands/configuration.js';
+import { getConfig, getConfigPath } from '../commands/configuration.js';
 
 const settingsBase = {
   configPath: getConfigPath(),
-  port: +config.SP_PROXY_PORT,
+  port: +getConfig().SP_PROXY_PORT,
   staticRoot: './node_modules/sp-rest-proxy/static',
   logLevel: 0,
 };

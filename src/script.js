@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import emoji from 'node-emoji';
 
 import { options } from './args.js';
-import config from '../config.js'
+import { getConfig } from './commands/configuration.js';
 import { startProxy } from './proxy/share-point.proxy.js';
 import { build, saveBackup, revertToBackup, deploy, testIfUserCanAuthenticate, exit } from './commands/index.js';
 import { showInBox, showInBoxSuccess, showInBoxError, twirlTimer } from './ui/index.js';
@@ -11,8 +11,8 @@ import { showInBox, showInBoxSuccess, showInBoxError, twirlTimer } from './ui/in
 
 try {
   await startProxy();
-  process.stdout.write(chalk.green(`${emoji.get('heavy_check_mark')}  SharePoint REST Proxy has been started on http://localhost:${config.SP_PROXY_PORT}\n`));
-  process.stdout.write(chalk.green(`\tRelative Path is: ${config.SP_RELATIVE_PATH}\n`));
+  process.stdout.write(chalk.green(`${emoji.get('heavy_check_mark')}  SharePoint REST Proxy has been started on http://localhost:${getConfig().SP_PROXY_PORT}\n`));
+  process.stdout.write(chalk.green(`\tRelative Path is: ${getConfig().SP_RELATIVE_PATH}\n`));
 } catch (error) {
   process.stdout.write(chalk.red.bold(`${emoji.get('x')} Error! Could not start proxy server\n`));
 }

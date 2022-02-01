@@ -1,9 +1,9 @@
 import fs from 'fs';
 import glob from 'glob';
-import config from '../../config.js'
+import { getConfig } from './configuration.js';
 import { folderExists, createFolder, sendFile, createFolderIfNotExists } from '../api/index.js';
 
-const folder = `${config.SRC_PROJECT_FOLDER}/${config.SRC_BUILD_REL_FOLDER}`;
+const folder = `${getConfig().SRC_PROJECT_FOLDER}/${getConfig().SRC_BUILD_REL_FOLDER}`;
 
 const changeAllHtmlExtensionsToTxt = (files) => {
     const [otherFiles, htmlFiles] = files.reduce(
@@ -53,7 +53,7 @@ const createFoldersByPath = async (path) => {
   let parentFolder = '';
 
   for (let folder of folders) {
-    await createFolderIfNotExists(`${config.DEST_REL_FOLDER}/${parentFolder}${folder}`);
+    await createFolderIfNotExists(`${getConfig().DEST_REL_FOLDER}/${parentFolder}${folder}`);
     parentFolder = `${parentFolder}${folder}/`;
   }
 }
@@ -88,22 +88,22 @@ const sendFileToFolder = async (
 };
 
 export const deploy = async () => {
-  const checkSrcFolder = fs.existsSync(`${config.SRC_PROJECT_FOLDER}/${config.SRC_BUILD_REL_FOLDER}`);
+  const checkSrcFolder = fs.existsSync(`${getConfig().SRC_PROJECT_FOLDER}/${getConfig().SRC_BUILD_REL_FOLDER}`);
   
   if(!checkSrcFolder) {
     throw new Error('Build folder not found') 
   }
 
-  const destFolderExists = await folderExists(config.DEST_REL_FOLDER);
+  const destFolderExists = await folderExists(getConfig().DEST_REL_FOLDER);
   if(!destFolderExists) {
-    await createFolder(config.DEST_REL_FOLDER);
+    await createFolder(getConfig().DEST_REL_FOLDER);
   }
 
   const listOfFiles = await getAllFiles();
   const listOfFolders = Array.from(new Set([...listOfFiles.filter(i => i.length > 1).map(i => i[0])]));
   await createFoldersByArray(listOfFolders);
 
-  const promises = listOfFiles.map(i => sendFileToFolder(folder, config.DEST_REL_FOLDER, i))
+  const promises = listOfFiles.map(i => sendFileToFolder(folder, getConfig().DEST_REL_FOLDER, i))
   const results = await Promise.allSettled(promises);
   const success = results.filter(result => result.status === 'fulfilled').map(i => i.value);
   const rejected = results.filter(result => result.status === 'rejected').map(result => result.reason.response?.data?.error?.message?.value);
