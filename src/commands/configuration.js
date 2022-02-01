@@ -8,7 +8,7 @@ let configFile = '';
 let config;
 
 export const getConfigPath = () => {
-  const path = join(process.cwd(), configFile); // join(process.cwd(), '..', configFile)
+  const path = join(process.cwd(), '..', configFile); // join(process.cwd(), configFile);
   
   if(!fs.existsSync(path)) {
     return '';
