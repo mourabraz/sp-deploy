@@ -1,5 +1,5 @@
 {
-  "name": "@mb/sp-deploy",
+  "name": "mb-sp-deploy",
   "version": "1.0.0",
   "description": "a script to help deploy to sharepoint",
   "author": "mourabraz <mourabraz@hotmail.com>",
