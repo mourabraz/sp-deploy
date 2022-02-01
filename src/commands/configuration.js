@@ -8,7 +8,7 @@ let configFile = '';
 let config;
 
 export const getConfigPath = () => {
-  const path = join(process.cwd(), '..', configFile); // join(process.cwd(), configFile);
+  const path = join(process.cwd(), configFile);
   
   if(!fs.existsSync(path)) {
     return '';
@@ -20,8 +20,6 @@ export const getConfigPath = () => {
 export const setConfig = (file = 'sp-deploy/config.deploy.json') => {
   configFile = file;
   const overrideConfigFile = getConfigPath();
-  
-  console.log(overrideConfigFile)
   
   if(!overrideConfigFile) {
     return { error: true, message: 'Config file not found' };
