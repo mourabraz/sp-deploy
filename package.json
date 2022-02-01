@@ -2,7 +2,8 @@
   "name": "sp-deploy",
   "version": "1.0.0",
   "description": "a script to help deploy to sharepoint",
-  "author": "mourabraz <cmourabraz@gmail.com>",
+  "author": "mourabraz <mourabraz@hotmail.com>",
+  "private": false,
   "license": "MIT",
   "repository": {
     "type": "git",
