@@ -1,9 +1,17 @@
 {
   "name": "sp-deploy",
   "version": "1.0.0",
+  "description": "a script to help deploy to sharepoint",
   "author": "mourabraz <cmourabraz@gmail.com>",
   "license": "MIT",
-  "main": "./bin/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mourabraz/sp-deploy.git"
+  },
+  "keywords": [
+    "sharepoint", "deploy"
+  ],
+  "main": "bin/index.js",
   "scripts": {
     "start": "node bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
