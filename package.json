@@ -2,7 +2,15 @@
   "name": "mb-sp-deploy",
   "version": "1.0.2",
   "description": "a script to help deploy to sharepoint",
-  "author": "mourabraz <mourabraz@hotmail.com>",
+  "author": {
+    "name": "mourabraz",
+    "email": "mourabraz@hotmail.com",
+    "url": "https://github.com/mourabraz"
+  },
+  "contributors": [
+    {"name":"Davide Sanatelli"},
+    {"name":"Marc Stoffel"}
+  ],
   "private": false,
   "license": "MIT",
   "repository": {

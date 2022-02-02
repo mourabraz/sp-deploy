@@ -22,7 +22,7 @@ if(! await testIfUserCanAuthenticate()) {
   exit(1);
 }
 
-if(options.revert){
+/* if(options.revert){
   process.stdout.write(chalk.yellow( "Revert to backup...\t"));
   const stopLoading = twirlTimer();
   const result = await revertToBackup();
@@ -37,7 +37,7 @@ if(options.revert){
   }
 
   exit();
-}
+} */
 
 if(options.build) {
   process.stdout.write(chalk.yellow('Building...\n'));
@@ -47,7 +47,7 @@ if(options.build) {
   showInBox(result);
 }
 
-if(!options.nobackup) {
+/* if(!options.nobackup) {
   process.stdout.write(chalk.yellow('Saving a backup...\t'));
   
   const stopLoading = twirlTimer();
@@ -61,7 +61,7 @@ if(!options.nobackup) {
   } else {
     process.stdout.write(chalk.yellow('Nothing to save as backup\n'));
   }
-}
+} */
 
 if(options.deploy) {
   process.stdout.write(chalk.yellow('Deploying...\n'));
