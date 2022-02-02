@@ -1,13 +1,10 @@
-
 import chalk from 'chalk';
 import emoji from 'node-emoji';
-
 import { options } from './args.js';
 import { getConfig } from './commands/configuration.js';
 import { startProxy } from './proxy/share-point.proxy.js';
 import { build, saveBackup, removeBackups, revertToBackup, deploy, testIfUserCanAuthenticate, exit } from './commands/index.js';
 import { showInBox, showInBoxSuccess, showInBoxError, twirlTimer } from './ui/index.js';
-
 
 try {
   await startProxy();
@@ -47,7 +44,7 @@ if(options.build) {
   showInBox(result);
 }
 
-if(options.backup ) { //&& options.deploy
+if(options.backup ) {
   {
     process.stdout.write(chalk.yellow('Saving a backup...\n'));
     const stopLoading = twirlTimer();
@@ -84,6 +81,5 @@ if(options.deploy) {
   showInBoxSuccess(success);
   showInBoxError(rejected);
 }
-
 
 exit();
