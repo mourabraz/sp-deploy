@@ -31,7 +31,7 @@ const getAllFiles = () => {
           console.log('Error', error);
           reject(error);
         } else {
-          const temp = files
+          const temp = changeAllHtmlExtensionsToTxt(files)
             .map(i => i.replace(`${folder}/`, '').split('/'))
             .map(i => {
               if (i.length === 1) return i;
