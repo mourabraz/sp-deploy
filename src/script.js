@@ -71,6 +71,8 @@ if(options.backup ) {
       process.stdout.write(chalk.red('\tError removing backups\n'));
     }
   }
+} else {
+  process.stdout.write(chalk.yellow(`\t${emoji.get('eyes')} Processing without creating a backup\n`));
 }
 
 if(options.deploy) {
