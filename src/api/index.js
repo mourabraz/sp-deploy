@@ -73,6 +73,21 @@ export const getFolders = async (folderName) => {
     return response.data?.d?.Folders?.results || [];
 };
 
+export const getFoldersAndFiles = async (folderName) => {
+  const endpoint = 
+    `${baseURL}/getfolderbyserverrelativeurl('${getConfig().DOCUMENT_LIBRARY}/${folderName}')?$expand=Folders,Files`;
+
+    const response = await axios.get(endpoint, {
+      headers: {
+        accept: 'application/json; odata=verbose',
+        'content-type': 'application/json; odata=verbose',
+        'X-RequestDigest': '',
+      },
+    });
+
+    return {folders: response.data?.d?.Folders?.results || [], files: response.data?.d?.Files?.results || []};
+};
+
 export const renameFolder = async (folderName, newName) => {
   const endpoint = 
     `${baseURL}/getfolderbyserverrelativeurl('${getConfig().DOCUMENT_LIBRARY}/${folderName}')/ListItemAllFields`;
@@ -84,6 +99,8 @@ export const renameFolder = async (folderName, newName) => {
       'X-RequestDigest': '',
     },
   });
+
+  console.log(response.data)
   const type = response.data.d.__metadata?.type
 
   if(!type) {
@@ -129,6 +146,22 @@ export const removeFolder = async (folderName) => {
   return response.status === 200;
 };
 
+export const removeFolderByRelativeURL = async (relativeUrl) => {
+  const endpoint = `${baseURL}/getfolderbyserverrelativeurl('${relativeUrl}')`;
+
+  const response = await axios.post(endpoint, null, {
+    headers: {
+      accept: 'application/json; odata=verbose',
+      'content-type': 'application/json; odata=verbose',
+      'X-RequestDigest': '',
+      'If-Match': '*',
+      'X-HTTP-Method': 'DELETE',
+    },
+  });
+
+  return response.status === 200;
+};
+
 export const sendFile = async (
   file,
   fileName,
@@ -146,4 +179,22 @@ export const sendFile = async (
   });
 
   return response.data.d;
+};
+
+export const cloneFileToFolder = async (file, folderOrinin, folderDest) => {
+  const from = file.ServerRelativeUrl;
+  const to = file.ServerRelativeUrl.replace(folderOrinin, folderDest);
+  const endpoint = 
+    `${baseURL}/getfilebyserverrelativeurl(@r)/copyto(strnewurl=@n)?@r='${from}'&@n='${to}'`;
+
+  const response = await axios.post(endpoint, null, {
+      binaryStringResponseBody: true,
+      headers: {
+        accept: 'application/json; odata=verbose',
+        'content-type': 'application/json; odata=verbose',
+        'X-RequestDigest': '',
+      },
+    });
+
+ return response?.status === 200;
 };

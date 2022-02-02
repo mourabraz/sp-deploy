@@ -1,6 +1,5 @@
 export * from './build.js';
-export * from './saveBackup.js';
-export * from './revertToBackup.js';
+export * from './backups.js';
 export * from './deploy.js';
 export * from './tests.js';
 export * from './exit.js';
