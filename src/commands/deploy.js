@@ -14,8 +14,11 @@ const changeAllHtmlExtensionsToTxt = (files) => {
       }, [[], []]
     );
 
+    let newName;
     for(let i = 0; i < htmlFiles.length; i++) {
-      fs.renameSync(htmlFiles[i], htmlFiles[i].replace('.html', '.txt'));
+      newName = htmlFiles[i].replace('.html', '.txt');
+      fs.renameSync(htmlFiles[i], newName);
+      htmlFiles[i] = newName;
     }
 
     return otherFiles.concat(htmlFiles);

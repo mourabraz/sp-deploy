@@ -1,6 +1,6 @@
 {
   "name": "mb-sp-deploy",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "a script to help deploy to sharepoint",
   "author": {
     "name": "mourabraz",
