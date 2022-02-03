@@ -8,8 +8,12 @@
     "url": "https://github.com/mourabraz"
   },
   "contributors": [
-    {"name":"Davide Sanatelli"},
-    {"name":"Marc Stoffel"}
+    {
+      "name": "Davide Sanatelli"
+    },
+    {
+      "name": "Marc Stoffel"
+    }
   ],
   "private": false,
   "license": "MIT",
@@ -18,14 +22,22 @@
     "url": "git+https://github.com/mourabraz/sp-deploy.git"
   },
   "keywords": [
-    "sharepoint", "deploy"
+    "sharepoint",
+    "deploy"
   ],
   "main": "bin/index.js",
   "scripts": {
     "start": "node bin/index.js",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
   "bin": {
     "sp-deploy": "./bin/index.js"
   },
@@ -38,5 +50,13 @@
     "glob": "^7.2.0",
     "node-emoji": "^1.11.0",
     "sp-rest-proxy": "^3.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1"
   }
 }

@@ -1,7 +1,19 @@
 import fs from 'fs';
 import { join } from 'path';
 
-const requiredKeys = ['COMMAND_BUILD', 'SP_RELATIVE_PATH', 'SRC_BUILD_REL_FOLDER', 'DOCUMENT_LIBRARY', 'DEST_REL_FOLDER', 'BACKUP_REL_FOLDER', 'siteUrl', 'strategy', 'username', 'password', 'fba'];
+const requiredKeys = [
+  'COMMAND_BUILD',
+  'SP_RELATIVE_PATH',
+  'SRC_BUILD_REL_FOLDER',
+  'DOCUMENT_LIBRARY',
+  'DEST_REL_FOLDER',
+  'BACKUP_REL_FOLDER',
+  'siteUrl',
+  'strategy',
+  'username',
+  'password',
+  'fba',
+];
 const optionaleKeys = ['SP_PROXY_PORT', 'SRC_PROJECT_FOLDER', 'MAXIMUM_BACKUPS'];
 
 let configFile = '';
@@ -9,46 +21,51 @@ let config;
 
 export const getConfigPath = () => {
   const path = join(process.cwd(), configFile);
-  
-  if(!fs.existsSync(path)) {
+
+  if (!fs.existsSync(path)) {
     return '';
   }
-  
-  return path;
-}
 
-export const setConfig = (file) => {
-  configFile = file ? file : join('sp-deploy', 'config.deploy.json');
+  return path;
+};
+
+export const setConfig = file => {
+  configFile = file || join('sp-deploy', 'config.deploy.json');
   const overrideConfigFile = getConfigPath();
-  
-  if(!overrideConfigFile) {
+
+  if (!overrideConfigFile) {
     return { error: true, message: 'Config file not found' };
   }
-  
+
   const configObj = JSON.parse(fs.readFileSync(overrideConfigFile));
-  
-  const isValid = Object.entries(configObj).reduce((acc, [k,v]) => {
-    if(requiredKeys.includes(k)) {
+
+  const isValid = Object.entries(configObj).reduce((acc, [k, v]) => {
+    if (requiredKeys.includes(k)) {
+      // eslint-disable-next-line no-param-reassign
       acc = acc && !!k && !!v;
-    } else if(!optionaleKeys.includes(k)) {
-      console.log('missing key', k)
+    } else if (!optionaleKeys.includes(k)) {
+      console.log('missing key', k);
+      // eslint-disable-next-line no-param-reassign
       acc = false;
     }
     return acc;
   }, true);
-  
-  if(!isValid) {
-    return { error: true, message: 'Required "keys" are missing on Config file' };
+
+  if (!isValid) {
+    return {
+      error: true,
+      message: 'Required "keys" are missing on Config file',
+    };
   }
 
-  config = {...configObj};
+  config = { ...configObj };
   return {
     error: false,
     message: '',
-  }
-}
+  };
+};
 
-export const getConfig = (key = '') =>  {
+export const getConfig = (key = '') => {
   switch (key) {
     case 'SP_PROXY_PORT':
       return config.SP_PROXY_PORT || 8989;
@@ -71,5 +88,4 @@ export const getConfig = (key = '') =>  {
     default:
       return config;
   }
-  
-}
+};

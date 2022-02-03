@@ -7,7 +7,7 @@ const execAsync = util.promisify(exec);
 const commandBuild = `yarn --cwd ${getConfig('SRC_PROJECT_FOLDER')} ${getConfig('COMMAND_BUILD')}`;
 
 export const build = async () => {
-  try{
+  try {
     const { stdout, stderr } = await execAsync(commandBuild);
 
     if (stderr) {
@@ -15,7 +15,7 @@ export const build = async () => {
     }
 
     return { error: false, message: stdout };
-  } catch(error) {
+  } catch (error) {
     return { error: true, message: error.message };
   }
-}
+};

@@ -10,8 +10,7 @@ const settingsBase = {
 
 const restProxyBase = new RestProxy(settingsBase);
 
-export const startProxy = () => {
-  return new Promise((resolve, reject) => {
+export const startProxy = () =>
+  new Promise((resolve, reject) => {
     restProxyBase.serve(resolve, reject);
-  })
-};
+  });

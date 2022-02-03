@@ -6,7 +6,7 @@ export const testIfUserCanAuthenticate = async () => {
     await folderExists(getConfig('DOCUMENT_LIBRARY'));
     return true;
   } catch (error) {
-    console.log(error.response.status, error.response.data);
+    // console.log(error.response.status, error.response.data);
     return false;
   }
-}
+};
