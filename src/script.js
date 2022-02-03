@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import emoji from 'node-emoji';
 import { options } from './args.js';
-import { getConfig } from './commands/configuration.js';
+import { getConfig } from './configuration.js';
 import { startProxy } from './proxy/share-point.proxy.js';
 import {
   build,
@@ -12,8 +12,8 @@ import {
   deploy,
   testIfUserCanAuthenticate,
   exit,
-} from './commands/index';
-import { showInBox, showInBoxSuccess, showInBoxError, twirlTimer } from './ui/index';
+} from './commands/index.js';
+import { showInBox, showInBoxSuccess, showInBoxError, twirlTimer } from './ui/index.js';
 
 try {
   await startProxy();
@@ -80,8 +80,8 @@ if (options.backup) {
       process.stdout.write(chalk.green('\tSuccessfully created backup'));
       process.stdout.write(
         chalk.yellow(
-          ` total files copied: ${result.filter(i => i.includes('file')).length} | total subfolders: ${
-            result.filter(i => i.includes('folder')).length
+          ` total files copied: ${message.filter(i => i.includes('file')).length} | total subfolders: ${
+            message.filter(i => i.includes('folder')).length
           }\n`,
         ),
       );

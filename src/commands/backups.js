@@ -1,4 +1,4 @@
-import { getConfig } from './configuration.js';
+import { getConfig } from '../configuration.js';
 import {
   getFolders,
   removeFolder,
@@ -122,7 +122,7 @@ export const removeBackups = async () => {
 
     return true;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return false;
   }
 };

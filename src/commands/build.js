@@ -1,6 +1,6 @@
 import util from 'util';
 import { exec } from 'child_process';
-import { getConfig } from './configuration.js';
+import { getConfig } from '../configuration.js';
 
 const execAsync = util.promisify(exec);
 

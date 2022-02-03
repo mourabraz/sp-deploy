@@ -1,4 +1,4 @@
-import { getConfig } from './configuration.js';
+import { getConfig } from '../configuration.js';
 import { folderExists } from '../api/index.js';
 
 export const testIfUserCanAuthenticate = async () => {

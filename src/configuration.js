@@ -39,12 +39,13 @@ export const setConfig = file => {
 
   const configObj = JSON.parse(fs.readFileSync(overrideConfigFile));
 
+  const missingKeys = [];
   const isValid = Object.entries(configObj).reduce((acc, [k, v]) => {
     if (requiredKeys.includes(k)) {
       // eslint-disable-next-line no-param-reassign
       acc = acc && !!k && !!v;
     } else if (!optionaleKeys.includes(k)) {
-      console.log('missing key', k);
+      missingKeys.push(k);
       // eslint-disable-next-line no-param-reassign
       acc = false;
     }
@@ -54,7 +55,7 @@ export const setConfig = file => {
   if (!isValid) {
     return {
       error: true,
-      message: 'Required "keys" are missing on Config file',
+      message: ['Required "keys" are missing on Config file', missingKeys.join(', ')],
     };
   }
 

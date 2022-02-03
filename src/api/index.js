@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getConfig } from '../commands/configuration.js';
+import { getConfig } from '../configuration.js';
 
 const baseURL = `http://localhost:${getConfig('SP_PROXY_PORT')}/${getConfig('SP_RELATIVE_PATH')}/_api/web`;
 

@@ -20,13 +20,6 @@ module.exports = {
     'no-await-in-loop': 'off',
     'import/prefer-default-export': 'off',
     'no-plusplus': 'off',
-  },
-  settings: {
-    'import/resolver': {
-      node: {
-        paths: ['.'],
-        extensions: ['.js', '.ts'],
-      },
-    },
+    'import/extensions': [2, 'always'],
   },
 };

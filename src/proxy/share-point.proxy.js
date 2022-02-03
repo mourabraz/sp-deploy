@@ -1,5 +1,5 @@
 import RestProxy from 'sp-rest-proxy';
-import { getConfig, getConfigPath } from '../commands/configuration.js';
+import { getConfig, getConfigPath } from '../configuration.js';
 
 const settingsBase = {
   configPath: getConfigPath(),
