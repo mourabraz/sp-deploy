@@ -1,8 +1,8 @@
 import fs from 'fs';
 import { join } from 'path';
 
-const requiredKeys = ['SP_PROXY_PORT', 'COMMAND_BUILD', 'MAXIMUM_BACKUPS', 'SP_RELATIVE_PATH', 'SRC_PROJECT_FOLDER', 'SRC_BUILD_REL_FOLDER', 'DOCUMENT_LIBRARY', 'DEST_REL_FOLDER', 'BACKUP_REL_FOLDER', 'siteUrl', 'strategy', 'username', 'password', 'fba'];
-const optionaleKeys = [];
+const requiredKeys = ['COMMAND_BUILD', 'SP_RELATIVE_PATH', 'SRC_BUILD_REL_FOLDER', 'DOCUMENT_LIBRARY', 'DEST_REL_FOLDER', 'BACKUP_REL_FOLDER', 'siteUrl', 'strategy', 'username', 'password', 'fba'];
+const optionaleKeys = ['SP_PROXY_PORT', 'SRC_PROJECT_FOLDER', 'MAXIMUM_BACKUPS'];
 
 let configFile = '';
 let config;
@@ -17,8 +17,8 @@ export const getConfigPath = () => {
   return path;
 }
 
-export const setConfig = (file = 'sp-deploy/config.deploy.json') => {
-  configFile = file;
+export const setConfig = (file) => {
+  configFile = file ? file : join('sp-deploy', 'config.deploy.json');
   const overrideConfigFile = getConfigPath();
   
   if(!overrideConfigFile) {
@@ -40,9 +40,6 @@ export const setConfig = (file = 'sp-deploy/config.deploy.json') => {
   if(!isValid) {
     return { error: true, message: 'Required "keys" are missing on Config file' };
   }
-  
-/*   const data = JSON.stringify(configObj, null, 2);
-  fs.writeFileSync('config.js', `export default ${data}`); */
 
   config = {...configObj};
   return {
@@ -51,6 +48,28 @@ export const setConfig = (file = 'sp-deploy/config.deploy.json') => {
   }
 }
 
-export const getConfig = () =>  {
-  return config;
+export const getConfig = (key = '') =>  {
+  switch (key) {
+    case 'SP_PROXY_PORT':
+      return config.SP_PROXY_PORT || 8989;
+    case 'SRC_PROJECT_FOLDER':
+      return config.SRC_PROJECT_FOLDER || process.cwd();
+    case 'MAXIMUM_BACKUPS':
+      return config.MAXIMUM_BACKUPS || 3;
+    case 'SP_RELATIVE_PATH':
+      return config.SP_RELATIVE_PATH;
+    case 'SRC_BUILD_REL_FOLDER':
+      return config.SRC_BUILD_REL_FOLDER;
+    case 'DOCUMENT_LIBRARY':
+      return config.DOCUMENT_LIBRARY;
+    case 'DEST_REL_FOLDER':
+      return config.DEST_REL_FOLDER;
+    case 'BACKUP_REL_FOLDER':
+      return config.BACKUP_REL_FOLDER;
+    case 'COMMAND_BUILD':
+      return config.COMMAND_BUILD;
+    default:
+      return config;
+  }
+  
 }

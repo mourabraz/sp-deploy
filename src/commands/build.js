@@ -4,7 +4,7 @@ import { getConfig } from './configuration.js';
 
 const execAsync = util.promisify(exec);
 
-const commandBuild = `yarn --cwd ${getConfig().SRC_PROJECT_FOLDER} ${getConfig().COMMAND_BUILD}`;
+const commandBuild = `yarn --cwd ${getConfig('SRC_PROJECT_FOLDER')} ${getConfig('COMMAND_BUILD')}`;
 
 export const build = async () => {
   try{
@@ -14,9 +14,8 @@ export const build = async () => {
       throw new Error(typeof stderr === 'string' ? stderr : JSON.stringify(stderr));
     }
 
-    return stdout;
+    return { error: false, message: stdout };
   } catch(error) {
-    console.log(`error: ${error.message}`);
-    throw new Error('Build fail');
+    return { error: true, message: error.message };
   }
 }

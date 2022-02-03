@@ -8,8 +8,8 @@ import { showInBox, showInBoxSuccess, showInBoxError, twirlTimer } from './ui/in
 
 try {
   await startProxy();
-  process.stdout.write(chalk.green(`${emoji.get('heavy_check_mark')}  SharePoint REST Proxy has been started on http://localhost:${getConfig().SP_PROXY_PORT}\n`));
-  process.stdout.write(chalk.green(`\tRelative Path is: ${getConfig().SP_RELATIVE_PATH}\n`));
+  process.stdout.write(chalk.green(`${emoji.get('heavy_check_mark')}  SharePoint REST Proxy has been started on http://localhost:${getConfig('SP_PROXY_PORT')}\n`));
+  process.stdout.write(chalk.green(`\tRelative Path is: ${getConfig('SP_RELATIVE_PATH')}\n`));
 } catch (error) {
   process.stdout.write(chalk.red.bold(`${emoji.get('x')} Error! Could not start proxy server\n`));
 }
@@ -22,13 +22,15 @@ if(! await testIfUserCanAuthenticate()) {
 if(options.revert){
   process.stdout.write(chalk.yellow('Revert to backup...\n'));
   const stopLoading = twirlTimer();
-  const result = await revertToBackup();
+  const { error, message } = await revertToBackup();
   stopLoading();
   
-  if(typeof result === 'boolean' && result) {
-    process.stdout.write(chalk.green('\tSuccessfully reverted backup\n'));
-  } else if(typeof result === 'boolean') {
+  if(error) {
     process.stdout.write(chalk.red('\tError reverting backup\n'));
+    showInBoxError(message);
+    exit(1);
+  } else if(message) {
+    process.stdout.write(chalk.green('\tSuccessfully reverted backup\n'));
   } else {
     process.stdout.write(chalk.yellow('\tNothing to revert\n'));
   }
@@ -39,9 +41,14 @@ if(options.revert){
 if(options.build) {
   process.stdout.write(chalk.yellow('Building...\n'));
   const stopLoading = twirlTimer();
-  const result = await build();
+  const { error, message } = await build();
   stopLoading();
-  showInBox(result);
+  if(error) {
+    showInBoxError(message);
+    exit(1);
+  } else {
+    showInBox(message);
+  }
 }
 
 if(options.backup ) {
@@ -61,7 +68,7 @@ if(options.backup ) {
   }
 
   {
-    process.stdout.write(chalk.yellow(`Removing old backups (set to keep the last ${getConfig().MAXIMUM_BACKUPS})...\n`));
+    process.stdout.write(chalk.yellow(`Removing old backups (set to keep the last ${getConfig('MAXIMUM_BACKUPS')})...\n`));
     const stopLoading = twirlTimer();
     const result = await removeBackups();
     stopLoading();
