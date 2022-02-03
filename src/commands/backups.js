@@ -1,4 +1,4 @@
-import { getConfig } from '../configuration.js';
+import { getConfig } from '../config/index.js';
 import {
   getFolders,
   removeFolder,

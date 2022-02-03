@@ -1,6 +1,6 @@
 import fs from 'fs';
 import glob from 'glob';
-import { getConfig } from '../configuration.js';
+import { getConfig } from '../config/index.js';
 import { folderExists, createFolder, sendFile, createFolderIfNotExists } from '../api/index.js';
 
 const FOLDER = `${getConfig('SRC_PROJECT_FOLDER')}/${getConfig('SRC_BUILD_REL_FOLDER')}`;

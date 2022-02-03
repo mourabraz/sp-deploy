@@ -2,7 +2,7 @@
 import chalk from 'chalk';
 import emoji from 'node-emoji';
 import { options } from './args.js';
-import { getConfig } from './configuration.js';
+import { getConfig } from './config/index.js';
 import { startProxy } from './proxy/share-point.proxy.js';
 import {
   build,
