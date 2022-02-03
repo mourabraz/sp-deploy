@@ -3,9 +3,8 @@
 // eslint-disable-next-line import/no-unresolved
 import chalk from 'chalk';
 import emoji from 'node-emoji';
-import { options } from '../src/args.js';
+import { options, exit } from '../src/args.js';
 import { setConfig } from '../src/config/index.js';
-import { exit } from '../src/commands/index.js';
 
 process.stdout.write(chalk.green(`${emoji.get('rocket')} Start!\n`));
 

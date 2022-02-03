@@ -26,7 +26,7 @@ const boxenOptions = {
   borderColor: 'white',
 };
 export const showInBox = message => {
-  process.stdout(boxen(message, boxenOptions));
+  process.stdout.write(boxen(message, boxenOptions));
 };
 const boxenOptionsSuccess = {
   ...boxenOptions,
@@ -34,11 +34,11 @@ const boxenOptionsSuccess = {
 };
 export const showInBoxSuccess = message => {
   if (typeof message === 'string') {
-    process.stdout(boxen(chalk.green(message), boxenOptionsSuccess));
+    process.stdout.write(boxen(chalk.green(message), boxenOptionsSuccess));
   } else if (Array.isArray(message)) {
-    process.stdout(boxen(chalk.green(message.join('\n')), boxenOptionsSuccess));
+    process.stdout.write(boxen(chalk.green(message.join('\n')), boxenOptionsSuccess));
   } else {
-    process.stdout(boxen(chalk.green('Success'), boxenOptionsSuccess));
+    process.stdout.write(boxen(chalk.green('Success'), boxenOptionsSuccess));
   }
 };
 const boxenOptionsError = {
@@ -47,10 +47,10 @@ const boxenOptionsError = {
 };
 export const showInBoxError = message => {
   if (typeof message === 'string') {
-    process.stdout(boxen(chalk.red(message), boxenOptionsError));
+    process.stdout.write(boxen(chalk.red(message), boxenOptionsError));
   } else if (Array.isArray(message)) {
-    process.stdout(boxen(chalk.red(message.map(i => `${emoji.get('x')} ${i}`).join('\n')), boxenOptionsError));
+    process.stdout.write(boxen(chalk.red(message.map(i => `${emoji.get('x')} ${i}`).join('\n')), boxenOptionsError));
   } else {
-    process.stdout(boxen(chalk.red('Error'), boxenOptionsError));
+    process.stdout.write(boxen(chalk.red('Error'), boxenOptionsError));
   }
 };

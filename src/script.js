@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 import chalk from 'chalk';
 import emoji from 'node-emoji';
-import { options } from './args.js';
+import { options, exit } from './args.js';
 import { getConfig } from './config/index.js';
 import { startProxy } from './proxy/share-point.proxy.js';
 import {
@@ -11,7 +11,6 @@ import {
   revertToBackup,
   deploy,
   testIfUserCanAuthenticate,
-  exit,
 } from './commands/index.js';
 import { showInBox, showInBoxSuccess, showInBoxError, twirlTimer } from './ui/index.js';
 
